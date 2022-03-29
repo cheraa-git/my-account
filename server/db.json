@@ -1,0 +1,10 @@
+{
+  "users": [
+    {"id": 1, "name": "Александр", "email": "chernetsov.aa@mail.ru", "password": "111111"},
+    {"id": 2, "name": "Иван", "email": "Ivan@mail.ru", "password": "111111"},
+    {"id": 3, "name": "Алексей", "email": "Alexey@mail.ru", "password": "111111"},
+    {"id": 4, "name": "Дмитрий", "email": "Dmitriy@mail.ru", "password": "111111"},
+    {"id": 5, "name": "Вадим", "email": "Vadim@mail.ru", "password": "111111"},
+    {"id": 6, "name": "Андрей", "email": "Andrew@mail.ru", "password": "111111"}
+  ]
+}
