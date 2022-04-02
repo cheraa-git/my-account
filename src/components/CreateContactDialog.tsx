@@ -25,6 +25,9 @@ export const CreateContactDialog: React.FC<CreateContactDialogProps> = ({ editDa
   const [alertOpen, setAlertOpen] = useState(false)
 
   const saveHandler = () => {
+    if (!inpValues.name) return snackbar('Введите имя')
+    if (!inpValues.phone) return snackbar('Введите номер телефона')
+
     if (!editData) {
       dispatch(addContact({ ...inpValues, token }, snackbar))
     } else {
@@ -38,6 +41,10 @@ export const CreateContactDialog: React.FC<CreateContactDialogProps> = ({ editDa
     onClose()
   }
 
+  const closeDialogHandler = () => {
+    setInpValues(initValues)
+    onClose()
+  }
   const delButton = (
     <>
       <Button color="error" onClick={() => setAlertOpen(true)}>
@@ -57,7 +64,7 @@ export const CreateContactDialog: React.FC<CreateContactDialogProps> = ({ editDa
   )
 
   return (
-    <Dialog open={isOpen} onClose={onClose} fullWidth>
+    <Dialog open={isOpen} onClose={closeDialogHandler} fullWidth>
       <div className="card p-2">
         <h1 className="display-6 card-header">{editData ? 'Редактирование' : 'Создание'} контакта</h1>
         <div className="card-body">
