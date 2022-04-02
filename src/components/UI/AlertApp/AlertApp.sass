@@ -1,0 +1,21 @@
+.alert-enter
+    transform: translateY(-30px)
+    opacity: 0
+    color: #00ff4c
+    &-active
+        opacity: 1
+        transform: translateY(40px)
+        transition: .5s
+        color: #fffb00
+    &-done
+        opacity: 1
+        transform: translateY(0)
+        transition: .5s
+        color: #ff0000
+
+.alert-exit
+    &-active
+        opacity: 0
+        transition: .5s
+        transform: translateY(-15px)
+        color: #ff00d4

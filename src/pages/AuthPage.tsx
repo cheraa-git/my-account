@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
+import { AlertApp } from '../components/UI/AlertApp/AlertApp'
+import { postAuthData, setError } from '../store/actions/authActions'
+import { RootState } from '../store/rootReducer'
 
 export const AuthPage: React.FC = () => {
+  const dispatch = useDispatch()
   const { mode } = useParams()
-  const [inpValue, setInpValue] = useState({ email: '', password: '', confirmPassword: '', name: '' })
-  const [valid, setValid] = useState({ email: '', name: '', password: '', confirmPassword: '' })
+  const { error } = useSelector((state: RootState) => state.auth)
+  const [inpValue, setInpValue] = useState({ phone: '', password: '', confirmPassword: '', name: '' })
+  const [valid, setValid] = useState({ phone: '', name: '', password: '', confirmPassword: '' })
 
-  const loginHandler = () => {}
+  const loginHandler = () => dispatch(postAuthData({ phone: inpValue.phone, password: inpValue.password }))
 
   const signupHandler = () => {}
 
@@ -20,11 +26,11 @@ export const AuthPage: React.FC = () => {
       <>
         <h1 className="display-6">Вход</h1>
         <div className="mb-3">
-          <label className="lead form-label">E-mail</label>
+          <label className="lead form-label">Телефон</label>
           <input
             className="form-control"
-            value={inpValue.email}
-            onChange={(e) => inputHandler({ email: e.target.value })}
+            value={inpValue.phone}
+            onChange={(e) => inputHandler({ phone: e.target.value })}
             required
           />
         </div>
@@ -57,15 +63,14 @@ export const AuthPage: React.FC = () => {
         <h2 className="display-6">Регистрация</h2>
 
         <div className="mb-3">
-          <label className="form-label lead">E-mail</label>
+          <label className="form-label lead">Телефон</label>
           <input
-            type="email"
-            className={`form-control is-${valid.email}`}
-            value={inpValue.email}
-            onChange={(e) => inputHandler({ email: e.target.value })}
+            className={`form-control is-${valid.phone}`}
+            value={inpValue.phone}
+            onChange={(e) => inputHandler({ phone: e.target.value })}
             required
           />
-          <div className="invalid-feedback">Некорректный E-mail</div>
+          <div className="invalid-feedback">Некорректный номер телефона</div>
         </div>
 
         <div className="mb-3">
@@ -120,8 +125,9 @@ export const AuthPage: React.FC = () => {
     )
   }
   return (
-    <div className="mx-auto" style={{ width: '60%', minWidth: '21rem', maxWidth: '600px' }}>
+    <div className="mx-auto">
       {content}
+      <AlertApp error={error} onClose={() => dispatch(setError(''))} />
     </div>
   )
 }
