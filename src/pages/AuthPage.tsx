@@ -1,21 +1,28 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useNavigate, useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { AlertApp } from '../components/UI/AlertApp/AlertApp'
-import { postAuthData, setError } from '../store/actions/authActions'
+import { postAuthData, postRegistrData, setError } from '../store/actions/authActions'
 import { RootState } from '../store/rootReducer'
 
 export const AuthPage: React.FC = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const { mode } = useParams()
   const { error } = useSelector((state: RootState) => state.auth)
   const [inpValue, setInpValue] = useState({ phone: '', password: '', confirmPassword: '', name: '' })
   const [valid, setValid] = useState({ phone: '', name: '', password: '', confirmPassword: '' })
 
-  const loginHandler = () => dispatch(postAuthData({ phone: inpValue.phone, password: inpValue.password }, navigate))
+  const loginHandler = () => dispatch(postAuthData({ phone: inpValue.phone, password: inpValue.password }))
 
-  const signupHandler = () => {}
+  const signupHandler = () => {
+    setValid({ ...valid, phone: '', name: '', password: '', confirmPassword: '' })
+    const { password, phone, confirmPassword, name } = inpValue
+    // проверка на валидацию...
+    if (password === confirmPassword) {
+      //
+    }
+    dispatch(postRegistrData({ password, phone, name }))
+  }
 
   const inputHandler = (obj: object) => {
     setInpValue((prev) => ({ ...prev, ...obj }))
@@ -79,7 +86,7 @@ export const AuthPage: React.FC = () => {
           <input
             className={`form-control is-${valid.name}`}
             value={inpValue.name}
-            // onChange={(e) => inputHandler(e, setLogin)}
+            onChange={(e) => inputHandler({ name: e.target.value })}
             required
           />
           <div className="invalid-feedback">
@@ -93,7 +100,7 @@ export const AuthPage: React.FC = () => {
             type="password"
             className={`form-control is-${valid.password}`}
             value={inpValue.password}
-            onChange={(e) => setInpValue({ ...inpValue })}
+            onChange={(e) => inputHandler({ password: e.target.value })}
             required
             minLength={6}
           />
@@ -106,14 +113,17 @@ export const AuthPage: React.FC = () => {
             type="password"
             className={`form-control is-${valid.confirmPassword}`}
             value={inpValue.confirmPassword}
-            // onChange={(e) => inputHandler(e, setConfirmPassword)}
+            onChange={(e) => inputHandler({ confirmPassword: e.target.value })}
             required
             minLength={6}
           />
           <div className="invalid-feedback">Пароли не совпадают</div>
         </div>
 
-        <button className="btn btn-primary" onClick={signupHandler}>
+        <button
+          className="btn btn-primary"
+          onClick={signupHandler}
+        >
           Зарегистрироваться
         </button>
         <p className="lead mb-0">

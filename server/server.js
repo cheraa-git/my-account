@@ -48,7 +48,18 @@ server.get('/auth/autologin', (req, res) => {
   res.json({ error: 'AutologinError' })
 })
 
+
+
 server.use(/^(?!\/auth).*$/, (req, res, next) => {
+  if (req.baseUrl === '/users' && req.method === 'POST') {
+    const payload = { phone: req.body.phone, name: req.body.name, password: req.body.password }
+    const isRepeatUser = router.db.get('users').find({ phone: payload.phone }).value() || null
+    if (isRepeatUser) {
+      return res.json({ error: 'RepeatUserError' })
+    }
+    next()
+    return
+  }
   if (!req.headers.authorization) {
     res.json({ error: 'Token not found' })
     return

@@ -24,3 +24,9 @@ export interface loginUserPayload {
   userPhone: string
   userId: number
 }
+
+export interface postRegistrDataPayload {
+  phone: string
+  name: string
+  password: string
+}
