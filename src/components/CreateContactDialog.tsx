@@ -19,7 +19,7 @@ export const CreateContactDialog: React.FC<CreateContactDialogProps> = ({ editDa
   const initValues = editData
     ? { name: editData.name, phone: editData.phone, note: editData.note }
     : { name: '', phone: '', note: '' }
-  const { token } = useSelector((state: RootState) => state.auth)
+  const { userId } = useSelector((state: RootState) => state.auth)
 
   const [inpValues, setInpValues] = useState(initValues)
   const [alertOpen, setAlertOpen] = useState(false)
@@ -29,15 +29,15 @@ export const CreateContactDialog: React.FC<CreateContactDialogProps> = ({ editDa
     if (!inpValues.phone) return snackbar('Введите номер телефона')
 
     if (!editData) {
-      dispatch(addContact({ ...inpValues, token }, snackbar))
+      dispatch(addContact({ ...inpValues, userId }, snackbar))
     } else {
-      dispatch(editContact(token, { ...editData, ...inpValues }, snackbar))
+      dispatch(editContact(userId, { ...editData, ...inpValues }, snackbar))
     }
     onClose()
   }
 
   const delHandler = () => {
-    dispatch(delContact(token, editData!, snackbar))
+    dispatch(delContact(userId, editData!, snackbar))
     onClose()
   }
 

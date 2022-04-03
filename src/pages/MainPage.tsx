@@ -9,12 +9,12 @@ import { RootState } from '../store/rootReducer'
 
 export const MainPage: React.FC = () => {
   const dispatch = useDispatch()
-  const { userName, token, userPhone } = useSelector((state: RootState) => state.auth)
+  const { userName, userPhone, userId } = useSelector((state: RootState) => state.auth)
   const { contacts } = useSelector((state: RootState) => state.contacts)
   const [isOpenDialog, setIsOpenDialog] = useState(false)
 
   useEffect(() => {
-    dispatch(fetchContacts(token))
+    dispatch(fetchContacts(userId))
   }, [])
   return (
     <div className="mx-auto ">

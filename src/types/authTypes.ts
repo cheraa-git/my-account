@@ -1,4 +1,4 @@
-import { LOGIN_USER, SET_ERROR } from '../store/actionTypes'
+import { LOGIN_USER, LOGOUT_USER, SET_ERROR } from '../store/actionTypes'
 
 interface setError {
   type: typeof SET_ERROR
@@ -10,12 +10,17 @@ interface loginUser {
   payload: loginUserPayload
 }
 
-export type authTypes = setError | loginUser
+interface logoutUser {
+  type: typeof LOGOUT_USER
+}
+
+export type authTypes = setError | loginUser | logoutUser
 
 ///////////////////////////////////////////
 
 export interface loginUserPayload {
-  token: number
+  token: string
   userName: string
   userPhone: string
+  userId: number
 }

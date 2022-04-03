@@ -26,7 +26,7 @@ export type contactsTypes = setContacts | delContact | addContact | editContact
 
 export interface Contact {
   id: number
-  token: string
+  userId: number
   name: string
   phone: string
   note: string

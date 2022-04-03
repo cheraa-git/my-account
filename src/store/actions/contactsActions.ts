@@ -3,9 +3,9 @@ import { Contact, contactsTypes } from '../../types/contactsTypes'
 import { Snackbar } from '../../types/otherTypes'
 import { ADD_CONTACT, DEL_CONTACT, EDIT_CONTACT, SET_CONTACTS } from '../actionTypes'
 
-export const fetchContacts = (token: number) => async (dispatch: any) => {
+export const fetchContacts = (userId: number) => async (dispatch: any) => {
   try {
-    const data = (await axiosApp.get(`/contacts?token=${token}`)).data
+    const data = (await axiosApp.get(`/contacts?userId=${userId}`)).data
     dispatch(setContacts(data))
     console.log('fetchContacts', data)
   } catch (e) {
@@ -29,9 +29,9 @@ export const addContact = (contact: object, snackbar: Snackbar) => async (dispat
   }
 }
 
-export const delContact = (userToken: string, contact: Contact, snackbar: Snackbar) => async (dispatch: any) => {
-  if (!(userToken === contact.token)) {
-    throw 'Remove contact error: Invalid token'
+export const delContact = (userId: number, contact: Contact, snackbar: Snackbar) => async (dispatch: any) => {
+  if (!(userId === contact.userId)) {
+    throw 'Remove contact error: Invalid userId'
   }
   try {
     const response = await axiosApp.delete(`/contacts/${contact.id}`)
@@ -45,11 +45,10 @@ export const delContact = (userToken: string, contact: Contact, snackbar: Snackb
   }
 }
 
-export const editContact = (userToken: string, contact: Contact, snackbar: Snackbar) => async (dispatch: any) => {
-  if (!(userToken === contact.token)) {
+export const editContact = (userId: number, contact: Contact, snackbar: Snackbar) => async (dispatch: any) => {
+  if (!(userId === contact.userId)) {
     throw 'Remove contact error: Invalid token'
   }
-
   try {
     const response = await axiosApp.put(`/contacts/${contact.id}`, contact)
 

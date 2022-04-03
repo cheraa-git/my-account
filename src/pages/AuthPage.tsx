@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { AlertApp } from '../components/UI/AlertApp/AlertApp'
 import { postAuthData, setError } from '../store/actions/authActions'
 import { RootState } from '../store/rootReducer'
 
 export const AuthPage: React.FC = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { mode } = useParams()
   const { error } = useSelector((state: RootState) => state.auth)
   const [inpValue, setInpValue] = useState({ phone: '', password: '', confirmPassword: '', name: '' })
   const [valid, setValid] = useState({ phone: '', name: '', password: '', confirmPassword: '' })
 
-  const loginHandler = () => dispatch(postAuthData({ phone: inpValue.phone, password: inpValue.password }))
+  const loginHandler = () => dispatch(postAuthData({ phone: inpValue.phone, password: inpValue.password }, navigate))
 
   const signupHandler = () => {}
 
