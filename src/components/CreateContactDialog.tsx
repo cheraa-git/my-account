@@ -42,7 +42,6 @@ export const CreateContactDialog: React.FC<CreateContactDialogProps> = ({ editDa
   }
 
   const closeDialogHandler = () => {
-    setInpValues(initValues)
     onClose()
   }
   const delButton = (
@@ -91,7 +90,7 @@ export const CreateContactDialog: React.FC<CreateContactDialogProps> = ({ editDa
         </div>
 
         <DialogActions>
-          <Button color="inherit" onClick={onClose}>
+          <Button color="inherit" onClick={closeDialogHandler}>
             Отмена
           </Button>
           <Button onClick={saveHandler}>сохранить</Button>
