@@ -6,7 +6,9 @@ import { RootState } from '../store/rootReducer'
 
 export const NavBar: React.FC = () => {
   const { isAuth } = useSelector((state: RootState) => state.auth)
+
   const dispatch = useDispatch()
+
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-0">
       <div className="container-fluid">
@@ -14,7 +16,7 @@ export const NavBar: React.FC = () => {
           Мои контакты &nbsp;
           <i className="bi bi-person-circle navbar-brand" />
         </a>
-        {isAuth && <Button onClick={() => dispatch(logoutUser())}>Выход</Button>}
+        <div>{isAuth && <Button onClick={() => dispatch(logoutUser())}>Выход</Button>}</div>
       </div>
     </nav>
   )

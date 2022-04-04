@@ -1,4 +1,4 @@
-import { ADD_CONTACT, DEL_CONTACT, EDIT_CONTACT, SET_CONTACTS } from '../store/actionTypes'
+import { ADD_CONTACT, DEL_CONTACT, EDIT_CONTACT, FILTER, SET_CONTACTS } from '../store/actionTypes'
 
 interface setContacts {
   type: typeof SET_CONTACTS
@@ -20,7 +20,12 @@ interface editContact {
   payload: Contact
 }
 
-export type contactsTypes = setContacts | delContact | addContact | editContact
+interface filterContacts {
+  type: typeof FILTER
+  payload: string
+}
+
+export type contactsTypes = setContacts | delContact | addContact | editContact | filterContacts
 
 /////////////
 

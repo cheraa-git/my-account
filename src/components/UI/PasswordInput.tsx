@@ -17,7 +17,6 @@ export const PasswordInput: React.FC<TextFieldProps> = (props) => {
         {...props}
         // immutable parameters
         type={showPassword ? 'text' : 'password'}
-        // style={{ width: '100%' }}
         fullWidth
         InputProps={{
           endAdornment: (

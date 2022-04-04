@@ -1,19 +1,20 @@
 import axiosApp from '../../axiosApp'
 import { Contact, contactsTypes } from '../../types/contactsTypes'
 import { Snackbar } from '../../types/otherTypes'
-import { ADD_CONTACT, DEL_CONTACT, EDIT_CONTACT, SET_CONTACTS } from '../actionTypes'
+import { ADD_CONTACT, DEL_CONTACT, EDIT_CONTACT, FILTER, SET_CONTACTS } from '../actionTypes'
+import { AppDispatch } from '../rootReducer'
 
-export const fetchContacts = (userId: number) => async (dispatch: any) => {
+export const fetchContacts = (userId: number) => async (dispatch: AppDispatch) => {
   try {
     const data = (await axiosApp.get(`/contacts?userId=${userId}`)).data
     dispatch(setContacts(data))
-    console.log('fetchContacts', data)
+    // console.log('fetchContacts', data)
   } catch (e) {
     console.log('Error: ', e)
   }
 }
 
-export const addContact = (contact: object, snackbar: Snackbar) => async (dispatch: any) => {
+export const addContact = (contact: object, snackbar: Snackbar) => async (dispatch: AppDispatch) => {
   try {
     const data = await axiosApp.post('/contacts', contact)
 
@@ -29,9 +30,9 @@ export const addContact = (contact: object, snackbar: Snackbar) => async (dispat
   }
 }
 
-export const delContact = (userId: number, contact: Contact, snackbar: Snackbar) => async (dispatch: any) => {
+export const delContact = (userId: number, contact: Contact, snackbar: Snackbar) => async (dispatch: AppDispatch) => {
   if (!(userId === contact.userId)) {
-    throw 'Remove contact error: Invalid userId'
+    throw new Error('Remove contact error: Invalid userId')
   }
   try {
     const response = await axiosApp.delete(`/contacts/${contact.id}`)
@@ -45,9 +46,9 @@ export const delContact = (userId: number, contact: Contact, snackbar: Snackbar)
   }
 }
 
-export const editContact = (userId: number, contact: Contact, snackbar: Snackbar) => async (dispatch: any) => {
+export const editContact = (userId: number, contact: Contact, snackbar: Snackbar) => async (dispatch: AppDispatch) => {
   if (!(userId === contact.userId)) {
-    throw 'Remove contact error: Invalid token'
+    throw new Error('Remove contact error: Invalid token')
   }
   try {
     const response = await axiosApp.put(`/contacts/${contact.id}`, contact)
@@ -89,5 +90,12 @@ export function editLocalContact(contact: Contact): contactsTypes {
   return {
     type: EDIT_CONTACT,
     payload: contact,
+  }
+}
+
+export function filterContacts(request: string): contactsTypes {
+  return {
+    type: FILTER,
+    payload: request,
   }
 }

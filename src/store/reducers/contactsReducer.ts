@@ -1,12 +1,14 @@
 import { Contact, contactsTypes } from '../../types/contactsTypes'
-import { ADD_CONTACT, DEL_CONTACT, EDIT_CONTACT, SET_CONTACTS } from '../actionTypes'
+import { ADD_CONTACT, DEL_CONTACT, EDIT_CONTACT, FILTER, SET_CONTACTS } from '../actionTypes'
 
-interface initialState {
+interface ContactsInitialState {
   contacts: Contact[]
+  filterBy: string
 }
 
-const initialState: initialState = {
+const initialState: ContactsInitialState = {
   contacts: [],
+  filterBy: '',
 }
 
 export function contactsReducer(state = initialState, action: contactsTypes) {
@@ -27,6 +29,8 @@ export function contactsReducer(state = initialState, action: contactsTypes) {
           return el
         }),
       }
+    case FILTER:
+      return { ...state, filterBy: action.payload }
     default:
       return state
   }

@@ -1,8 +1,9 @@
 import axiosApp from '../../axiosApp'
 import { authTypes, loginUserPayload, postRegistrDataPayload } from '../../types/authTypes'
 import { LOGIN_USER, LOGOUT_USER, SET_ERROR } from '../actionTypes'
+import { AppDispatch } from '../rootReducer'
 
-export const postAuthData = (payload: { phone: string; password: string }) => async (dispatch: any) => {
+export const postAuthData = (payload: { phone: string; password: string }) => async (dispatch: AppDispatch) => {
   try {
     const response = await axiosApp.post('/auth/login', payload)
     const data = response.data
@@ -25,7 +26,7 @@ export const postAuthData = (payload: { phone: string; password: string }) => as
   }
 }
 
-export const autoLogin = () => async (dispatch: any) => {
+export const autoLogin = () => async (dispatch: AppDispatch) => {
   const token = localStorage.getItem('token')
   if (!token) {
     return dispatch(logoutUser())
@@ -35,8 +36,6 @@ export const autoLogin = () => async (dispatch: any) => {
   }
   try {
     const data = (await axiosApp.get('/auth/autologin')).data
-    console.log('AUTO_LOGIN_DATA', data)
-
     if (data.error) {
       return dispatch(logoutUser())
     } else {

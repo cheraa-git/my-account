@@ -14,10 +14,10 @@ export const PersonCard: React.FC<{ contact: Contact }> = ({ contact }) => {
     <>
       <Accordion className="mt-2">
         <AccordionSummary
-          expandIcon={<img className="opacity-50" src={ArrowSvg} width={15} />}
+          expandIcon={<img className="opacity-50" src={ArrowSvg} width={15} alt="arrow" />}
           aria-controls="panel1a-content"
         >
-          <img className="me-2" src={PersonSvg} width={30} />
+          <img className="me-2" src={PersonSvg} width={30} alt="person" />
           <div className="lead">{contact.name}</div>
         </AccordionSummary>
 

@@ -17,11 +17,27 @@ export const AuthPage: React.FC = () => {
   const signupHandler = () => {
     setValid({ ...valid, phone: '', name: '', password: '', confirmPassword: '' })
     const { password, phone, confirmPassword, name } = inpValue
-    // проверка на валидацию...
-    if (password === confirmPassword) {
-      //
+    if (
+      password.length >= 6 &&
+      name.match(/^[a-zA-Zа-яА-Я0-9]{3,25}$/) &&
+      phone.match(/^((8|\+7)[\- ]?)(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/i)
+    ) {
+      if (password === confirmPassword) {
+        dispatch(postRegistrData({ phone, password, name }))
+        console.log('success')
+        return
+      }
+      setValid((prev) => ({ ...prev, confirmPassword: 'invalid' }))
     }
-    dispatch(postRegistrData({ password, phone, name }))
+    if (password.length < 6) {
+      setValid((prev) => ({ ...prev, password: 'invalid' }))
+    }
+    if (!name.match(/^[a-zA-Zа-яА-Я0-9]{3,25}$/)) {
+      setValid((prev) => ({ ...prev, name: 'invalid' }))
+    }
+    if (!phone.match(/^((8|\+7)[\- ]?)(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/i)) {
+      setValid((prev) => ({ ...prev, phone: 'invalid' }))
+    }
   }
 
   const inputHandler = (obj: object) => {
@@ -90,7 +106,7 @@ export const AuthPage: React.FC = () => {
             required
           />
           <div className="invalid-feedback">
-            Только буквы (A-Z a-z) и цифры (0-9), не меньше 3 и не больше 25 символов
+            Только буквы (A-Z a-z А-Я а-я) и цифры (0-9), не меньше 3 и не больше 25 символов
           </div>
         </div>
 
@@ -120,10 +136,7 @@ export const AuthPage: React.FC = () => {
           <div className="invalid-feedback">Пароли не совпадают</div>
         </div>
 
-        <button
-          className="btn btn-primary"
-          onClick={signupHandler}
-        >
+        <button className="btn btn-primary" onClick={signupHandler}>
           Зарегистрироваться
         </button>
         <p className="lead mb-0">

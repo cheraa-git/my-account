@@ -24,8 +24,6 @@ export function authReducer(state = initialState, action: authTypes) {
     case SET_ERROR:
       return { ...state, error: action.payload }
     case LOGIN_USER:
-      console.log('LOG', action.payload)
-
       return {
         ...state,
         token: action.payload.token,

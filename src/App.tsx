@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { NavBar } from './components/NavBar'
 import { AuthPage } from './pages/AuthPage'
 import { MainPage } from './pages/MainPage'
